@@ -10,7 +10,7 @@
     </div>
 
     <div class="right-top">
-
+      <rightTopPanel :panelItems="chargingPileTop4" :percentage="percentage" />
     </div>
     <div class="right-center">
       <barEcharts :echartDatas="chargingStatistics" />
@@ -37,13 +37,14 @@ import barEcharts from '@/components/bar-echarts.vue';
 import rightBottomSvg from '@/components/right-bottom-svg.vue';
 import centerSvg from '@/components/center-svg.vue';
 import bottomPanel from '@/components/bottom-panel.vue';
-import { ref } from 'vue';
+import rightTopPanel from '@/components/right-top-panel.vue';
+import { onMounted, ref } from 'vue';
 import {
   chargingPileData,
   processMonitoringData,
   chargingStatisticsData,
-  exceptionMonitoringData
-
+  exceptionMonitoringData,
+  chargingPileTop4Data
 } from '../config/home-data.js';
 import { getPowerScreenData } from '@/services/index.js';
 
@@ -53,16 +54,35 @@ const processMonitoring = ref(processMonitoringData)
 const chargingStatistics = ref(chargingStatisticsData)
 const exceptionMonitoring = ref(exceptionMonitoringData)
 const dataAnalysis = ref()
+const chargingPileTop4 = ref(chargingPileTop4Data)
+const percentage = ref(0)
 
+onMounted(() => {
+  // 发起网络请求拿到首页的数据
+  getPowerScreenData()
+    .then((res) => {
+      chargingPile.value = res.data.chargingPile.data
+      processMonitoring.value = res.data.processMonitoring.data
+      chargingStatistics.value = res.data.chargingStatistics.data
+      exceptionMonitoring.value = res.data.exceptionMonitoring.data
+      dataAnalysis.value = res.data.dataAnalysis.data
+      chargingPileTop4.value = res.data.chargingTop4.data
+      percentage.value = res.data.chargingTop4.totalPercentage
+
+    })
+})
 // 发起网络请求拿到首页的数据
-getPowerScreenData()
-  .then((res) => {
-    chargingPile.value = res.data.chargingPile.data
-    processMonitoring.value = res.data.processMonitoring.data
-    chargingStatistics.value = res.data.chargingStatistics.data
-    exceptionMonitoring.value = res.data.exceptionMonitoring.data
-    dataAnalysis.value = res.data.dataAnalysis.data
-  })
+// const getPowerScreen = getPowerScreenData()
+// .then((res) => {
+//   chargingPile.value = res.data.chargingPile.data
+//   processMonitoring.value = res.data.processMonitoring.data
+//   chargingStatistics.value = res.data.chargingStatistics.data
+//   exceptionMonitoring.value = res.data.exceptionMonitoring.data
+//   dataAnalysis.value = res.data.dataAnalysis.data
+//   chargingPileTop4.value = res.data.chargingTop4.data
+//   percentage.value = res.data.chargingTop4.totalPercentage
+
+// })
 
 
 

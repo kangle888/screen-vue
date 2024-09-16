@@ -106,3 +106,33 @@ export const exceptionMonitoringData = [
       "begin": "-5s"
   }
 ]
+
+// 充电桩top4占比
+
+export const chargingPileTop4Data = [
+  {
+    id: 1,
+    name: "深圳",
+    percentage: "0%",
+  },
+  {
+    id: 2,
+    name: "广州",
+    percentage: "0%",
+  },
+  {
+    id: 3,
+    name: "东莞",
+    percentage: "0%",
+  },
+  {
+    id: 4,
+    name: "佛山",
+    percentage: "0%",
+  },
+  {
+    id: 5,
+    name: "其它",
+    percentage: "0%",
+  },
+]
